@@ -1,6 +1,6 @@
-<div class="col-md-2">
+<div class="col-md-2 position-fixed mt-2">
     <div class="p-2">
-        <h4>{{Auth::user()->first_name . " " . Auth::user()->last_name}}</h4>
+        <h4 class="px-2">{{Auth::user()->first_name . " " . Auth::user()->last_name}}</h4>
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a {{--href="/users/{{Auth::user()->id}}/notifications"--}} class="btn btn-light mt-1">

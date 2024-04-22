@@ -14,18 +14,15 @@
     {{-- Top Bar --}}
     @include('partials._topbar')
 
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0 my-5">
         <div class="row no-gutters m-0">
-            {{-- Left Navigation --}}
+            {{-- Left Navigation (only when logged in) --}}
             @auth
-            @include('partials._leftnav')
-            @else
-            {{-- Spacer --}}
-            <div class="col-md-2"></div>
+                @include('partials._leftnav')
             @endauth
     
             {{-- Spacer --}}
-            <div class="col-md-1"></div>
+            <div class="col-md-3"></div>
             
             {{-- Content --}}
             <div class="col-md-6">

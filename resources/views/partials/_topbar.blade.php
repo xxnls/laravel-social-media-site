@@ -1,4 +1,4 @@
-<div class="navbar bg-body-secondary">
+<div class="navbar bg-body-secondary fixed-top">
     <a class="navbar-brand px-3" href="/home">Social Media Site</a>
 
     @auth
