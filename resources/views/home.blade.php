@@ -17,23 +17,28 @@
                                 <img src="{{ asset('img/default/default-user.jpg') }}" class="rounded-circle img-thumbnail" style="width: 40px; height: 40px;" alt="default user image">
                             </div>
 
-                            <div class="col">
+                            <div class="col-auto">
                                 <div class="short-div">{{ $model->User->first_name . ' ' . $model->User->last_name}}</div>
                                 {{-- Date formatting --}}
                                 <div class="short-div">{{ $model->created_at->format('jS \of F Y H:i'); }}</div>
                             </div>
 
-                            <div class="dropdown show">
-                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Dropdown link
-                                </a>
-                              
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                  <a class="dropdown-item" href="#">Action</a>
-                                  <a class="dropdown-item" href="#">Another action</a>
-                                  <a class="dropdown-item" href="#">Something else here</a>
+                            {{-- Spacer --}}
+                            <div class="col"></div>
+
+                            {{-- Post dropdown menu (when user created post)--}}
+                            @if($model->user_id == Auth::id())
+                                <div class="dropdown dropend col-auto">
+                                    <button type="button" class="btn btn-light rounded-circle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <!-- Dropdown menu links -->
+                                        <a class="dropdown-item" {{--href="{{ route('posts.edit', $model->id) }}"--}}>Edit</a>
+                                        <a class="dropdown-item" {{--href="{{ route('posts.delete', $model->id) }}"--}}>Delete</a>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
 
                         {{-- Show the post content --}}
