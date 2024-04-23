@@ -25,7 +25,7 @@ class PostsController extends Controller
     {
         $formFields = $request->validate([
             'content' => 'required|min:5|max:255',
-            'image_path' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image_path' => 'image'
         ]);
 
         $formFields['user_id'] = auth()->user()->id;
