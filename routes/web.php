@@ -6,7 +6,7 @@ use App\Http\Controllers\UsersController;
 
 //Welcome page
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/home');
 });
 
 //Posts page

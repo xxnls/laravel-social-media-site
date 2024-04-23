@@ -8,19 +8,29 @@
         <form action="/posts" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <textarea id="content" name="content" class="form-control" placeholder="What do you want to say?" aria-label="What do you want to say?"></textarea>
+                <textarea id="content" name="content" class="form-control" placeholder="What do you want to say?" aria-label="What do you want to say?" value="{{old('content')}}"></textarea>
+            
+                @error('content')
+                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                @enderror
             </div>
 
-            <div class="form-group">
-                <div class="row mt-2">
-                    {{-- Create button --}}
-                    <div class="col-6">
+            <div class="d-flex mt-2">
+                {{-- Create button --}}
+                <div class="form-group">
+                    <div class="col-auto">
                         <button type="submit" class="btn btn-primary">Create</button>
                     </div>
+                </div>
 
-                    {{-- Add image input --}}
-                    <div class="col-md-6">
-                        <input type="file" name="image_path" id="image_path" class="form-control">
+                {{-- Add image input --}}
+                <div class="form-group">
+                    <div class="">
+                        <input type="file" name="image_path" id="image_path" class="form-control" value="{{old('image_path')}}">
+
+                        @error('image_path')
+                            <div class="alert alert-danger mt-2">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
