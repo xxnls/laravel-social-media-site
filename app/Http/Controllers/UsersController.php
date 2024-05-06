@@ -97,4 +97,42 @@ class UsersController extends Controller
 
         return back()->with('message', 'User credentials updated successfully.');
     }
+
+    //Show change email form
+    public function email($id){
+        $model = User::find($id);
+        return view('users.user-settings.edit-email', ["model"=>$model, "pageTitle"=>"Change email"]);
+    }
+
+    //Update user email
+    public function updateEmail(Request $request, $id){
+        $formFields = $request->validate([
+            'email' => ['required', 'email', 'confirmed']
+        ]);
+
+        $user=User::find($id);
+        $user->update($formFields);
+
+        return back()->with('message', 'User email updated successfully.');
+    }
+
+    //Show change password form
+    public function password($id){
+        $model = User::find($id);
+        return view('users.user-settings.edit-password', ["model"=>$model, "pageTitle"=>"Change password"]);
+    }
+
+    //Update user password
+    public function updatePassword(Request $request, $id){
+        $formFields = $request->validate([
+            'password' => ['required', 'min:8', 'confirmed']
+        ]);
+
+        $formFields['password'] = bcrypt($formFields['password']);
+
+        $user=User::find($id);
+        $user->update($formFields);
+
+        return back()->with('message', 'User password updated successfully.');
+    }
 }

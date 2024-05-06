@@ -23,14 +23,14 @@
         </div>
 
         <div class="row">
-            <a class="btn btn-secondary mt-1" {{--href="/edit-user"--}}>
+            <a class="btn btn-secondary mt-1" href="settings/email">
                 <i class="bi bi-envelope-at-fill"></i>
                 Change email
             </a>
         </div>
 
         <div class="row">
-            <a class="btn btn-secondary mt-1" {{--href="/edit-user"--}}>
+            <a class="btn btn-secondary mt-1" href="settings/password">
                 <i class="bi bi-lock"></i>
                 Change password
             </a>

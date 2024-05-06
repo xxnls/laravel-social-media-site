@@ -45,7 +45,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="/users/{id}/settings" class="btn btn-light mt-1">
+                <a href="/users/{{Auth::user()->id}}/settings" class="btn btn-light mt-1">
                     <i class="bi bi-gear-fill"></i>
                     Settings
                 </a>

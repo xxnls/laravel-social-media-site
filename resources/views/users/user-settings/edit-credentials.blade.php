@@ -53,12 +53,12 @@
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </div>
-            
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary mt-2">Change credentials</button>
+                <a href="/users/{{$model->id}}/settings" class="btn btn-secondary mt-2">Cancel</a>
             </div>
         </form>
     </div>
 </div>
-
 @endsection

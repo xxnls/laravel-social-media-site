@@ -51,6 +51,18 @@ Route::get('/users/{id}/settings/credentials', [UsersController::class,"credenti
 //Update user credentials
 Route::put('/users/{id}', [UsersController::class,"update"]);
 
+//Show change email form
+Route::get('/users/{id}/settings/email', [UsersController::class,"email"]);
+
+//Update user email
+Route::put('/users/{id}/email', [UsersController::class,"updateEmail"]);
+
+//Show change password form
+Route::get('/users/{id}/settings/password', [UsersController::class,"password"]);
+
+//Update user password
+Route::put('/users/{id}/password', [UsersController::class,"updatePassword"]);
+
 //Logout user
 Route::post('/logout', [UsersController::class,"logout"]);
 
