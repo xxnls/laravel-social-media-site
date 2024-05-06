@@ -68,5 +68,33 @@ class UsersController extends Controller
             return redirect('/home')->with('message', 'User logged in successfully.');
         }
 
-        return back()->withErrors(['login_info' => 'The provided credentials do not match our records.',])->onlyInput();}
+        return back()->withErrors(['login_info' => 'The provided credentials do not match our records.',])->onlyInput();
     }
+
+    //Show user settings
+    public function settings($id){
+        $model = User::find($id);
+        return view('users.user-settings.settings', ["model"=>$model, "pageTitle"=>"User settings"]);
+    }
+
+    //Show change credentials form
+    public function credentials($id){
+        $model = User::find($id);
+        return view('users.user-settings.edit-credentials', ["model"=>$model, "pageTitle"=>"Change credentials"]);
+    }
+
+    //Update user credentials
+    public function update(Request $request, $id){
+        $formFields = $request->validate([
+            'first_name' => ['required', 'min:2', 'max:100'],
+            'last_name' => ['required', 'min:2', 'max:100'],
+            'gender' => ['required'],
+            'date_of_birth' => ['required', 'date']
+        ]);
+
+        $user=User::find($id);
+        $user->update($formFields);
+
+        return back()->with('message', 'User credentials updated successfully.');
+    }
+}

@@ -42,6 +42,15 @@ Route::post('/users/authenticate', [UsersController::class,"authenticate"]);
 //Store new user
 Route::post('/users', [UsersController::class,"store"]);
 
+//Show user settings
+Route::get('/users/{id}/settings', [UsersController::class,"settings"]);
+
+//Show change credentials form
+Route::get('/users/{id}/settings/credentials', [UsersController::class,"credentials"]);
+
+//Update user credentials
+Route::put('/users/{id}', [UsersController::class,"update"]);
+
 //Logout user
 Route::post('/logout', [UsersController::class,"logout"]);
 
