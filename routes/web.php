@@ -12,11 +12,23 @@ Route::get('/', function () {
 //Posts page
 Route::get('/home', [PostsController::class,"index"]);
 
-//Create post page / show form
+//Show create post form
 Route::get('/posts/create', [PostsController::class,"create"]);
 
 //Store new post
 Route::post('/posts', [PostsController::class,"store"]);
+
+//Show edit post form
+Route::get('/posts/{id}/edit', [PostsController::class,"edit"]);
+
+//Update edited post
+Route::put('/posts/{id}', [PostsController::class,"update"]);
+
+//Delete post
+Route::delete('/posts/{id}', [PostsController::class,"destroy"]);
+
+//Show post
+Route::get('/posts/{id}', [PostsController::class,"show"]);
 
 //Register page / show form
 Route::get('/register', [UsersController::class,"create"]);

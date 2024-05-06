@@ -42,4 +42,51 @@ class PostsController extends Controller
 
         return redirect('/home')->with('message', 'Post created successfully.');
     }
+
+    //Show post
+    public function show($id)
+    {
+        $model = Post::find($id);
+        return view("posts.show", ["model"=>$model,"pageTitle"=>"Post"]);
+    }
+
+    //Edit post form
+    public function edit($id)
+    {
+        $model = Post::find($id);
+        return view("posts.edit", ["model"=>$model,"pageTitle"=>"Edit Post"]);
+    }
+
+    //Update post
+    public function update(Request $request, $id)
+    {
+        $formFields = $request->validate([
+            'content' => 'required|min:5|max:255',
+            'image_path' => 'image'
+        ]);
+
+        $formFields['user_id'] = auth()->user()->id;
+
+        //Upload image
+        if ($request->has('image_path')) {
+            $image = $request->file('image_path');
+            $imageName = auth()->user()->name . time() . '.' . $image->extension();
+            $image->move(public_path('img/posts/'), $imageName);
+            $formFields['image_path'] = $imageName;
+        }
+
+        $post = Post::find($id);
+        $post->update($formFields);
+
+        return redirect('/home')->with('message', 'Post updated successfully.');
+    }
+
+    //Delete post
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect('/home')->with('message', 'Post deleted successfully.');
+    }
 }

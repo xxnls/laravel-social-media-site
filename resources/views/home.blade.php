@@ -19,8 +19,11 @@
 
                             <div class="col-auto">
                                 <div class="short-div">{{ $model->User->first_name . ' ' . $model->User->last_name}}</div>
-                                {{-- Date formatting --}}
-                                <div class="short-div">{{ $model->created_at->format('jS \of F Y H:i'); }}</div>
+                                {{-- Show post --}}
+                                <a href="posts/{{$model->id}}" class="short-div link-dark">
+                                    {{-- Date formatting --}}
+                                    <div class="short-div">{{ $model->created_at->format('jS \of F Y H:i'); }}</div>
+                                </a>
                             </div>
 
                             {{-- Spacer --}}
@@ -33,7 +36,7 @@
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <!-- Dropdown menu links -->
+                                        <!-- Dropdown menu links (AJAX) -->
                                         <a class="dropdown-item" {{--href="{{ route('posts.edit', $model->id) }}"--}}>Edit</a>
                                         <a class="dropdown-item" {{--href="{{ route('posts.delete', $model->id) }}"--}}>Delete</a>
                                     </div>
