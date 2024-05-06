@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
@@ -160,5 +161,54 @@ class UsersController extends Controller
 
         
         return redirect('users/'.$user->id.'/settings')->with('message', 'User profile image updated successfully.');
+    }
+
+    //Show delete user form
+    public function delete($id){
+        $model = User::find($id);
+        
+        //Generate random code for confirmation
+        $confirmationCode = mt_rand(100000, 999999);
+
+        return view('users.user-settings.delete', ["model"=>$model, "confirmationCode"=>$confirmationCode ,"pageTitle"=>"Delete user"]);
+    }
+
+    //Delete user
+    public function destroy(Request $request, $id){
+        $formFields = $request->validate([
+            'password' => ['required'],
+            'confirmationCode' => ['required', 'numeric', 'digits_between:6,6'],
+        ]);
+    
+        // Check if the confirmation code matches the generated code
+        if ($formFields['confirmationCode'] != $request->get('confirmationCode')) {
+            return redirect()->back()->withErrors(['confirmationCode' => 'Invalid confirmation code.'])->withInput();
+        }
+
+        $user = User::find($id);
+
+        //Check if password is correct
+        if (!auth()->attempt(['email' => $user->email, 'password' => $formFields['password']])) {
+            return redirect()->back()->withErrors(['password' => 'Invalid password.'])->withInput();
+        }
+
+        //Delete all user posts
+        $posts = Post::where("user_id","=",$user->id)->get();
+        foreach($posts as $post){
+            $post->is_active = 0;
+            $post->update();
+            $post->delete();
+        }
+
+        //Delete user
+        $user->is_active = 0;
+        $user->update();
+        $user->delete();
+
+        //Logout, invalidate session and redirect
+        auth()->logout();
+        $request->session()->invalidate();
+    
+        return redirect('/home')->with('message', 'Account deleted.');
     }
 }

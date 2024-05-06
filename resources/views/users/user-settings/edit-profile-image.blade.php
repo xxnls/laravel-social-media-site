@@ -14,7 +14,7 @@
                 @if($model->profile_image_path)
                 <div class="form-group">
                     <label for="profile_image">Old profile image</label>
-                    <img src="{{asset('img/users/' . $model->profile_image_path)}}" alt="Profile image" class="rounded-circle img-thumbnail" style="width: 40px; height: 40px;">
+                    <x-show-profile-image :model="Auth::user()" :width="200" :height="200" />
                 </div>
                 @endif
                     

@@ -44,7 +44,7 @@
         </div>
 
         <div class="row">
-            <a class="btn btn-secondary mt-1" {{--href="/edit-user"--}}>
+            <a class="btn btn-secondary mt-1" href="settings/delete">
                 <i class="bi bi-person-x-fill"></i>
                 Delete account
             </a>

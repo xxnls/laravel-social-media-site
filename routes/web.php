@@ -69,6 +69,12 @@ Route::get('/users/{id}/settings/profile-image', [UsersController::class,"profil
 //Update user profile image
 Route::put('/users/{id}/profile-image', [UsersController::class,"updateProfileImage"]);
 
+//Show delete user form
+Route::get('/users/{id}/settings/delete', [UsersController::class,"delete"]);
+
+//Delete user
+Route::delete('/users/{id}', [UsersController::class,"destroy"]);
+
 //Logout user
 Route::post('/logout', [UsersController::class,"logout"]);
 

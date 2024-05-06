@@ -7,7 +7,7 @@
             {{-- Show the user image, credentials, date of post, dropdown menu --}}
             <div class="row">
                 <div class="col-auto">
-                    <img src="{{ asset('img/default/default-user.jpg') }}" class="rounded-circle img-thumbnail" style="width: 40px; height: 40px;" alt="default user image">
+                    <x-show-profile-image :model="$model->User"/>
                 </div>
 
                 <div class="col-auto">

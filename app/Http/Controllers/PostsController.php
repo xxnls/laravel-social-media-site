@@ -85,6 +85,8 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        $post->is_active = 0;
+        $post->update();
         $post->delete();
 
         return redirect('/home')->with('message', 'Post deleted successfully.');
