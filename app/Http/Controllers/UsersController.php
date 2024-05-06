@@ -95,7 +95,7 @@ class UsersController extends Controller
         $user=User::find($id);
         $user->update($formFields);
 
-        return back()->with('message', 'User credentials updated successfully.');
+        return redirect('users/'.$user->id.'/settings')->with('message', 'User credentials updated successfully.');
     }
 
     //Show change email form
@@ -113,7 +113,7 @@ class UsersController extends Controller
         $user=User::find($id);
         $user->update($formFields);
 
-        return back()->with('message', 'User email updated successfully.');
+        return redirect('users/'.$user->id.'/settings')->with('message', 'User email updated successfully.');
     }
 
     //Show change password form
@@ -133,6 +133,32 @@ class UsersController extends Controller
         $user=User::find($id);
         $user->update($formFields);
 
-        return back()->with('message', 'User password updated successfully.');
+        return redirect('users/'.$user->id.'/settings')->with('message', 'User password updated successfully.');
+    }
+
+    //Show change profile image form
+    public function profileImage($id){
+        $model = User::find($id);
+        return view('users.user-settings.edit-profile-image', ["model"=>$model, "pageTitle"=>"Change profile image"]);
+    }
+
+    //Update user profile image
+    public function updateProfileImage(Request $request, $id){
+        $formFields = $request->validate([
+            'profile_image_path' => ['required']
+        ]);
+
+
+        $user=User::find($id);
+
+        $image = $request->file('profile_image_path');
+        $imageName = auth()->user()->name . time() . '.' . $image->extension();
+        $image->move(public_path('img/users/'), $imageName);
+        $formFields['profile_image_path'] = $imageName;
+
+        $user->update($formFields);
+
+        
+        return redirect('users/'.$user->id.'/settings')->with('message', 'User profile image updated successfully.');
     }
 }

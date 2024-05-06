@@ -37,7 +37,7 @@
         </div>
 
         <div class="row">
-            <a class="btn btn-secondary mt-1" {{--href="/edit-user"--}}>
+            <a class="btn btn-secondary mt-1" href="settings/profile-image">
                 <i class="bi bi-person-badge"></i>
                 Change profile picture
             </a>

@@ -63,6 +63,12 @@ Route::get('/users/{id}/settings/password', [UsersController::class,"password"])
 //Update user password
 Route::put('/users/{id}/password', [UsersController::class,"updatePassword"]);
 
+//Show change profile image form
+Route::get('/users/{id}/settings/profile-image', [UsersController::class,"profileImage"]);
+
+//Update user profile image
+Route::put('/users/{id}/profile-image', [UsersController::class,"updateProfileImage"]);
+
 //Logout user
 Route::post('/logout', [UsersController::class,"logout"]);
 

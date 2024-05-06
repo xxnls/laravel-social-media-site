@@ -8,8 +8,10 @@
     </title>
     <link rel="stylesheet" href="{{mix('/node_modules/bootstrap/dist/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{mix('/node_modules/bootstrap-icons/font/bootstrap-icons.min.css')}}" />
+    <link rel="stylesheet" href="{{mix('/node_modules/simplebar/dist/simplebar.css')}}" />
+
 </head>
-<body class="bg-light">
+<body class="bg-light" data-simplebar>
 
     {{-- Top Bar --}}
     @include('partials._topbar')
@@ -46,6 +48,7 @@
     <script src="{{mix('/node_modules/jquery/dist/jquery.min.js')}}"></script>
     <script src="{{mix('/node_modules/@popperjs/core/dist/umd/popper.min.js')}}"></script>
     <script src="{{mix('/node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script src="{{mix('/node_modules/simplebar/dist/simplebar.min.js')}}"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
 </body>
 </html>

@@ -1,11 +1,20 @@
 <div class="col-md-2 position-fixed mt-2">
     <div class="p-2">
-        <h4 class="px-2">{{Auth::user()->first_name . " " . Auth::user()->last_name}}</h4>
         <ul class="nav flex-column">
+            <div class="nav-item text-center">
+                @if(Auth::user()->profile_image_path)
+                    <img src="{{asset('img/users/' . Auth::user()->profile_image_path)}}" alt="Profile image" class="rounded-circle img-thumbnail" style="width: 80px; height: 80px;">
+                @else
+                    <img src="{{asset('img/default/default-user.jpg')}}" alt="Default profile image" class="rounded-circle img-thumbnail" style="width: 40px; height: 40px;">
+                @endif
+
+                <h4 class="px-2">{{Auth::user()->first_name . " " . Auth::user()->last_name}}</h4>
+            </div>
+
             <li class="nav-item">
                 <a {{--href="/users/{{Auth::user()->id}}/notifications"--}} class="btn btn-light mt-1">
                     <i class="bi bi-bell-fill"></i>
-                    Notifiactions
+                    Notifications
                 </a>
             </li>
 
