@@ -10,7 +10,10 @@ class PostsController extends Controller
     //Show posts
     public function index()
     {
-        $models = Post::where("is_active","=",true)->latest()->paginate(5);
+        $models = Post::where("is_active","=",true)->
+                        latest()->
+                        filter(request(['search']))->
+                        paginate(5);
         return view("home", ["models"=>$models,"pageTitle"=>"Posts"]);
     }
 

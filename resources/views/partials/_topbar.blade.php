@@ -3,10 +3,10 @@
 
     @auth
     {{-- Search bar --}}
-    <form action="/search" method="GET" class="d-flex">
+    <form action="/" class="d-flex">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+            <input type="text" name="search" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="submit">Search</button>
         </div>          
     </form>
 

@@ -5,12 +5,16 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 
 //Welcome page
-Route::get('/', function () {
-    return redirect('/home');
-});
+// Route::get('/', function () {
+//     return redirect('/home');
+// });
+
+Route::get('/', [PostsController::class,"index"]);
 
 //Posts page
-Route::get('/home', [PostsController::class,"index"]);
+Route::get('/home', function () {
+    return redirect('/');
+});
 
 //Show create post form
 Route::get('/posts/create', [PostsController::class,"create"]);
