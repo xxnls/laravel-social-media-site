@@ -67,4 +67,9 @@
         <p>No posts found</p>
     @endunless
 
+    {{-- Pagination --}}
+    <div class="d-flex justify-content-center">
+        {{ $models->links() }}
+    </div>
+
 @endsection
