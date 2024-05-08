@@ -14,6 +14,7 @@ class PostsController extends Controller
                         latest()->
                         filter(request(['search']))->
                         paginate(5);
+                        
         return view("home", ["models"=>$models,"pageTitle"=>"Posts"]);
     }
 
