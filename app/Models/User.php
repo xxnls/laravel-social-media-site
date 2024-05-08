@@ -53,6 +53,17 @@ class User extends Authenticatable
         ];
     }
 
+    // upon delete, set is_active to 0
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->is_active = 0;
+            $user->save();
+        });
+    }
+
     public function Posts()
     {
         return $this->hasMany(Post::class, "user_id");

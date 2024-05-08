@@ -19,6 +19,17 @@ class Post extends Model
         });
     }
 
+    // upon delete, set is_active to 0
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($post) {
+            $post->is_active = 0;
+            $post->save();
+        });
+    }
+
     public function User()
     {
         return $this->belongsTo(User::class, 'user_id'); // Assuming user_id is the foreign key in posts table
