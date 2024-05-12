@@ -31,16 +31,7 @@
 
                             {{-- Post dropdown menu (when user created post)--}}
                             @if($model->user_id == Auth::id())
-                                <div class="dropdown dropend col-auto">
-                                    <button type="button" class="btn btn-light rounded-circle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="bi bi-three-dots"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <!-- Dropdown menu links (AJAX) -->
-                                        <a class="dropdown-item" {{--href="{{ route('posts.edit', $model->id) }}"--}}>Edit</a>
-                                        <a class="dropdown-item" {{--href="{{ route('posts.delete', $model->id) }}"--}}>Delete</a>
-                                    </div>
-                                </div>
+                                <x-post-dropdown-menu :model="$model" method="ajax" />
                             @endif
                         </div>
 
@@ -111,7 +102,7 @@
                                             </div>
 
                                             {{-- Comment content --}}
-                                            <div class="col-auto card card-body" style="border-radius: 20px;">{{ $comment->content }} @if($comment->updated_at) <i>(edited)</i> @endif</div>
+                                            <div class="col-auto card card-body" style="border-radius: 20px;">{{ $comment->content }} @if($comment->updated_at) <i class="opacity-75">(edited)</i> @endif</div>
                                         </div>
                                     @endforeach
                                 </div>
