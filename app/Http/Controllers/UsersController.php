@@ -159,14 +159,14 @@ class UsersController extends Controller
 
         $user->update($formFields);
 
-        
+
         return redirect('users/'.$user->id.'/settings')->with('message', 'User profile image updated successfully.');
     }
 
     //Show delete user form
     public function delete($id){
         $model = User::find($id);
-        
+
         //Generate random code for confirmation
         $confirmationCode = mt_rand(100000, 999999);
 
@@ -179,7 +179,7 @@ class UsersController extends Controller
             'password' => ['required'],
             'confirmationCode' => ['required', 'numeric', 'digits_between:6,6'],
         ]);
-    
+
         // Check if the confirmation code matches the generated code
         if ($formFields['confirmationCode'] != $request->get('confirmationCode')) {
             return redirect()->back()->withErrors(['confirmationCode' => 'Invalid confirmation code.'])->withInput();
@@ -195,20 +195,20 @@ class UsersController extends Controller
         //Delete all user posts
         $posts = Post::where("user_id","=",$user->id)->get();
         foreach($posts as $post){
-            $post->is_active = 0;
-            $post->update();
+            //$post->is_active = 0;
+            //$post->update();
             $post->delete();
         }
 
         //Delete user
-        $user->is_active = 0;
-        $user->update();
+        //$user->is_active = 0;
+        //$user->update();
         $user->delete();
 
         //Logout, invalidate session and redirect
         auth()->logout();
         $request->session()->invalidate();
-    
+
         return redirect('/home')->with('message', 'Account deleted.');
     }
 }
