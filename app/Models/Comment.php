@@ -6,18 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Comment extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['content', 'user_id', 'is_active', 'image_path'];
-
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['search'] ?? false, function ($query, $search) {
-            return $query->where('content', 'like', '%' . $search . '%');
-        });
-    }
+    protected $fillable = ['content', 'user_id', 'post_id', 'is_active'];
 
     // upon delete, set is_active to 0
     protected static function boot()
@@ -35,8 +28,8 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function Comments()
+    public function Post()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(Post::class, 'post_id');
     }
 }
