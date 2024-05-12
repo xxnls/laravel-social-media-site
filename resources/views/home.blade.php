@@ -4,7 +4,7 @@
 @section("content")
 
     @unless(count($models) == 0)
-
+    <?php //dd($models); ?>
     <div>
         {{-- Show the posts --}}
         @foreach($models as $model)
@@ -50,13 +50,36 @@
                         </div>
 
                         {{-- Show the post image --}}
-                        @if($model->image_path) 
+                        @if($model->image_path)
                             <div class="row text-center">
                                 <div class="col">
                                     <img src="{{ asset('img/posts/' . $model->image_path) }}" class="img-fluid" alt="post image">
                                 </div>
                             </div>
                         @endif
+
+                        {{-- Show the post comments --}}
+                        @if(count($model->comments) > 0)
+                            <div class="row">
+                                <div>
+                                    <hr>
+
+                                    @foreach($model->comments as $comment)
+                                        <div class="row mt-2 mx-2">
+                                            <div class="col-md-1"></div>
+
+                                            {{-- profile image --}}
+                                            <div class="col-md-1 mt-1">
+                                                <x-show-profile-image :model="$comment->User" />
+                                            </div>
+                                            <div class="col-md-2 mt-3">{{ $comment->User->first_name . ' ' . $comment->User->last_name }}</div>
+                                            <div class="col-md-8 card card-body ">{{ $comment->content }}</div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             </div>

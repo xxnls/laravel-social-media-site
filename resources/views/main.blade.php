@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-        {{$pageTitle??"Home"}}
+        {{$pageTitle ?? "Home"}}
     </title>
     <link rel="stylesheet" href="{{mix('/node_modules/bootstrap/dist/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{mix('/node_modules/bootstrap-icons/font/bootstrap-icons.min.css')}}" />
@@ -22,10 +22,10 @@
             @auth
                 @include('partials._leftnav')
             @endauth
-    
+
             {{-- Spacer --}}
             <div class="col-md-3"></div>
-            
+
             {{-- Content --}}
             <div class="col-md-6">
                 <div class="p-3">
@@ -33,10 +33,10 @@
                     @yield('content')
                 </div>
             </div>
-    
+
             {{-- Spacer --}}
             <div class="col-md-1"></div>
-    
+
             {{-- Right Navigation --}}
             {{-- @include('partials._rightnav') --}}
         </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Comment;
 
 class PostsController extends Controller
 {
@@ -15,7 +16,18 @@ class PostsController extends Controller
                         filter(request(['search']))->
                         paginate(5);
 
-        return view("/home", ["models"=>$models,"pageTitle"=>"Posts"]);
+
+        // Get comments for each post
+        foreach($models as $model)
+        {
+            $comments = Comment::where("post_id","=",$model->id)->get();
+            foreach ($comments as $comment) {
+                $comment->load('User');
+            }
+            $model->comments = $comments;
+        }
+
+        return view("/home", ["models"=>$models, "pageTitle"=>"Posts"]);
     }
 
     //Create new post form
