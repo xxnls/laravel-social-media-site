@@ -38,7 +38,7 @@ class UsersController extends Controller
         //Login
         auth()->login($user);
 
-        return redirect('/home')->with('message', 'User created successfully.');
+        return redirect('/')->with('message', 'User created successfully.');
     }
 
     //Logout user
@@ -48,7 +48,7 @@ class UsersController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/home')->with('message', 'User logged out successfully.');
+        return redirect('/')->with('message', 'User logged out successfully.');
     }
 
     //Show login form
@@ -66,7 +66,7 @@ class UsersController extends Controller
         if(auth()->attempt($credentials)){
             $request->session()->regenerate();
 
-            return redirect('/home')->with('message', 'User logged in successfully.');
+            return redirect('/')->with('message', 'User logged in successfully.');
         }
 
         return back()->withErrors(['login_info' => 'The provided credentials do not match our records.',])->onlyInput();
@@ -209,6 +209,6 @@ class UsersController extends Controller
         auth()->logout();
         $request->session()->invalidate();
 
-        return redirect('/home')->with('message', 'Account deleted.');
+        return redirect('/')->with('message', 'Account deleted.');
     }
 }

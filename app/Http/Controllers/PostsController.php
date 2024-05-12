@@ -15,7 +15,7 @@ class PostsController extends Controller
                         filter(request(['search']))->
                         paginate(5);
 
-        return view("home", ["models"=>$models,"pageTitle"=>"Posts"]);
+        return view("/home", ["models"=>$models,"pageTitle"=>"Posts"]);
     }
 
     //Create new post form
@@ -44,7 +44,7 @@ class PostsController extends Controller
 
         $post = Post::create($formFields);
 
-        return redirect('/home')->with('message', 'Post created successfully.');
+        return redirect('/')->with('message', 'Post created successfully.');
     }
 
     //Show post
@@ -82,7 +82,7 @@ class PostsController extends Controller
         $post = Post::find($id);
         $post->update($formFields);
 
-        return redirect('/home')->with('message', 'Post updated successfully.');
+        return redirect('/')->with('message', 'Post updated successfully.');
     }
 
     //Delete post
@@ -93,6 +93,6 @@ class PostsController extends Controller
         //$post->update();
         $post->delete();
 
-        return redirect('/home')->with('message', 'Post deleted successfully.');
+        return redirect('/')->with('message', 'Post deleted successfully.');
     }
 }
