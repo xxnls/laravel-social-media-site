@@ -51,7 +51,7 @@
 
                         {{-- Show the post image --}}
                         @if($model->image_path)
-                            <div class="row text-center">
+                            <div class="row text-center pt-2">
                                 <div class="col">
                                     <img src="{{ asset('img/posts/' . $model->image_path) }}" class="img-fluid" alt="post image">
                                 </div>
@@ -59,7 +59,8 @@
                         @endif
 
                         {{-- Like, comment buttons and counters --}}
-                        <div class="row mt-2">
+                        <div class="row mt-2 gx-2">
+                            {{-- Likes --}}
                             <div class="col-auto">
                                 <button type="button" class="btn btn-light rounded-circle">
                                     <i class="bi bi-hand-thumbs-up-fill"></i>
@@ -70,6 +71,9 @@
                                 0
                             </div>
 
+                            <div class="col-auto mx-2"></div> {{-- Spacer --}}
+
+                            {{-- Comments --}}
                             <div class="col-auto">
                                 <button type="button" class="btn btn-light rounded-circle">
                                     <i class="bi bi-chat-fill"></i>
@@ -89,7 +93,7 @@
 
                                     @foreach($model->comments as $comment)
                                         <div class="row mt-3 mx-2">
-                                            <div class="col-md-1"></div>
+                                            <div class="col-md-1"></div> {{-- Spacer --}}
 
                                             {{-- Profile image --}}
                                             <div class="col-md-1">
