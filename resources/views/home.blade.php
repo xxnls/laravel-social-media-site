@@ -45,7 +45,7 @@
                         </div>
 
                         {{-- Show the post content --}}
-                        <div class="row py-2">
+                        <div class="row pt-2">
                             <div class="col">{{ $model->content }}</div>
                         </div>
 
@@ -58,6 +58,29 @@
                             </div>
                         @endif
 
+                        {{-- Like, comment buttons and counters --}}
+                        <div class="row mt-2">
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-light rounded-circle">
+                                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                                </button>
+                            </div>
+
+                            <div class="col-auto mt-2">
+                                0
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-light rounded-circle">
+                                    <i class="bi bi-chat-fill"></i>
+                                </button>
+                            </div>
+
+                            <div class="col-auto mt-2">
+                                {{ count($model->comments) }}
+                            </div>
+                        </div>
+
                         {{-- Show the post comments --}}
                         @if(count($model->comments) > 0)
                             <div class="row">
@@ -65,15 +88,26 @@
                                     <hr>
 
                                     @foreach($model->comments as $comment)
-                                        <div class="row mt-2 mx-2">
+                                        <div class="row mt-3 mx-2">
                                             <div class="col-md-1"></div>
 
-                                            {{-- profile image --}}
-                                            <div class="col-md-1 mt-1">
+                                            {{-- Profile image --}}
+                                            <div class="col-md-1">
                                                 <x-show-profile-image :model="$comment->User" />
                                             </div>
-                                            <div class="col-md-2 mt-3">{{ $comment->User->first_name . ' ' . $comment->User->last_name }}</div>
-                                            <div class="col-md-8 card card-body ">{{ $comment->content }}</div>
+
+                                            {{-- User name and date --}}
+                                            <div class="col-md-3">
+                                                <div class="row">
+                                                    <div class="short-div">{{ $comment->User->first_name . ' ' . $comment->User->last_name }}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="short-div">{{ $comment->created_at->format('jS \of F Y H:i'); }}</div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Comment content --}}
+                                            <div class="col-auto card card-body" style="border-radius: 20px;">{{ $comment->content }} @if($comment->updated_at) <i>(edited)</i> @endif</div>
                                         </div>
                                     @endforeach
                                 </div>
