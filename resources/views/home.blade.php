@@ -1,10 +1,17 @@
 <?php use Carbon\Carbon; ?>
+<script src="{{mix('/resources/js/post.js')}}"></script>
 
 @extends("main")
 @section("content")
 
     @unless(count($models) == 0)
-    <?php //dd($models); ?>
+    {{-- Script for AJAX usage --}}
+    <script>
+        $(document).ready(function() {
+            $(".deletePost").on("click", deletePost);
+        });
+    </script>
+
     <div>
         {{-- Show the posts --}}
         @foreach($models as $model)

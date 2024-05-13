@@ -12,30 +12,6 @@
             <a class="dropdown-item deletePost" data-id="{{ $model->id }}">Delete</a>
         </div>
     </div>
-
-    <script>
-        //TO DO CALLUJE ZA DUZO RAZY (TYLE ILE PRZYCISKOW JEST NA STRONIE)
-        $(document).ready(function() {
-            $(".deletePost").on("click", deletePost);
-        });
-
-        function deletePost(event)
-        {
-            let a = this;
-
-            $.ajax({
-                    url:"/posts/" + this.dataset.id + "/ajax",
-                    method:"DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success:function()
-                    {
-                        a.parentNode.remove();
-                    }
-                });
-        }
-    </script>
 @endif
 
 @if($method == 'standard')
