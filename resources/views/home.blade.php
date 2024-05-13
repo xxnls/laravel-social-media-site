@@ -8,6 +8,7 @@
     <script>
         $(document).ready(function() {
             $(".deletePost").on("click", deletePost);
+            $(".updatePost").on("click", updatePost);
         });
     </script>
 

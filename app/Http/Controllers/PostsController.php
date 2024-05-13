@@ -97,12 +97,34 @@ class PostsController extends Controller
         return redirect('/')->with('message', 'Post updated successfully.');
     }
 
+    //Update post AJAX
+    public function updateAjax(Request $request, $id)
+    {
+        $formFields = $request->validate([
+            'content' => 'required|min:5|max:255',
+            'image_path' => 'image'
+        ]);
+
+        $formFields['user_id'] = auth()->user()->id;
+
+        //Upload image
+        if ($request->has('image_path')) {
+            $image = $request->file('image_path');
+            $imageName = auth()->user()->name . time() . '.' . $image->extension();
+            $image->move(public_path('img/posts/'), $imageName);
+            $formFields['image_path'] = $imageName;
+        }
+
+        $post = Post::find($id);
+        $post->update($formFields);
+
+        return response()->json(['message' => 'Post updated successfully.'], 200);
+    }
+
     //Delete post
     public function destroy($id)
     {
         $post = Post::find($id);
-        //$post->is_active = 0;
-        //$post->update();
         $post->delete();
 
         return redirect('/')->with('message', 'Post deleted successfully.');

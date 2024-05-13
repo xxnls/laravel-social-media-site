@@ -28,6 +28,9 @@ Route::get('/posts/{id}/edit', [PostsController::class,"edit"]);
 //Update edited post
 Route::put('/posts/{id}', [PostsController::class,"update"]);
 
+//Update edited post AJAX
+Route::put('/posts/{id}/ajax', [PostsController::class,"updateAjax"]);
+
 //Delete post
 Route::delete('/posts/{id}', [PostsController::class,"destroy"]);
 
