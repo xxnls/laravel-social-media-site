@@ -31,6 +31,9 @@ Route::put('/posts/{id}', [PostsController::class,"update"]);
 //Delete post
 Route::delete('/posts/{id}', [PostsController::class,"destroy"]);
 
+//Delete post AJAX
+Route::delete('/posts/{id}/ajax', [PostsController::class,"destroyAjax"]);
+
 //Show post
 Route::get('/posts/{id}', [PostsController::class,"show"]);
 

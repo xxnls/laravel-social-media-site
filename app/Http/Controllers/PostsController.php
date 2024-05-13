@@ -107,4 +107,18 @@ class PostsController extends Controller
 
         return redirect('/')->with('message', 'Post deleted successfully.');
     }
+
+    //Delete post AJAX
+    public function destroyAjax($id)
+    {
+        $post = Post::find($id);
+
+        if($post != null){
+            $post->delete();
+            return response()->json(['message' => 'Post deleted successfully.'], 200);
+        }
+        else{
+            return response()->json(['message' => 'Post not found.'], 404);
+        }
+    }
 }
