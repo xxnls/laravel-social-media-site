@@ -1,5 +1,4 @@
 <?php use Carbon\Carbon; ?>
-<script src="{{mix('/resources/js/post.js')}}"></script>
 
 @extends("main")
 @section("content")

@@ -15,6 +15,7 @@
     <script src="{{mix('/node_modules/@popperjs/core/dist/umd/popper.min.js')}}"></script>
     <script src="{{mix('/node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <script src="{{mix('/node_modules/simplebar/dist/simplebar.min.js')}}"></script>
+    <script src="{{mix('/resources/js/post.js')}}"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
 
 </head>

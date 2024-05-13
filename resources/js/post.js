@@ -10,7 +10,7 @@ function deletePost(event)
                     },
                     success:function()
                     {
-                        a.parentNode.remove();
+                        a.parentNode.parentNode.parentNode.parentNode.parentNode.remove();
                     }
                 });
         }
