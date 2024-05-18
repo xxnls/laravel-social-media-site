@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CommentsController;
 
 //Welcome page
 // Route::get('/', function () {
@@ -39,6 +40,9 @@ Route::delete('/posts/{id}/ajax', [PostsController::class,"destroyAjax"]);
 
 //Show post
 Route::get('/posts/{id}', [PostsController::class,"show"]);
+
+//Store new comment
+Route::post('/posts/{id}/comment', [CommentsController::class,"store"]);
 
 //Register page / show form
 Route::get('/register', [UsersController::class,"create"]);

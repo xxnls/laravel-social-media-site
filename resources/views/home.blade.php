@@ -75,7 +75,7 @@
 
                             {{-- Comments --}}
                             <div class="col-auto">
-                                <button type="button" class="btn btn-light rounded-circle showCommentForm" data-auth="{{ json_encode(Auth::user()) }}">
+                                <button type="button" class="btn btn-light rounded-circle showCommentForm" data-auth="{{ json_encode(Auth::user()) }}" data-id="{{ $model->id }}">
                                     <i class="bi bi-chat-fill"></i>
                                 </button>
                             </div>

@@ -112,6 +112,9 @@ function showCommentForm(event) {
     //User that is commenting
     let authUser = post.data('auth');
 
+    //Post id
+    let postId = post.data('id');
+
     let commentFormHTML = `
         <div id="commentFormContainer" class="row mt-3 mx-2">
             <div class="col-md-1"></div> <!-- Spacer -->
@@ -149,28 +152,30 @@ function showCommentForm(event) {
             let formData = $(this).serialize();
 
             $.ajax({
-                url: "/posts/" + post.data('id') + "/comments",
+                url: "/posts/" + postId + "/comment",
                 method: "POST",
                 data: formData,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
+                    let formattedDate = moment(response.comment.created_at).format('Do [of] MMMM YYYY HH:mm');
+
                     let commentHTML = `
                         <div class="row mt-3 mx-2">
                             <div class="col-md-1"></div> <!-- Spacer -->
                             <div class="col-md-1">
-                                <x-show-profile-image :model="Auth::user()" />
+                                <img src="img/users/${authUser.profile_image_path}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
                             </div>
                             <div class="col-md-3">
                                 <div class="row">
-                                    <div class="short-div">${response.user.first_name} ${response.user.last_name}</div>
+                                    <div class="short-div">${authUser.first_name} ${authUser.last_name}</div>
                                 </div>
                                 <div class="row">
-                                    <div class="short-div">${response.created_at}</div>
+                                    <div class="short-div">${formattedDate}</div>
                                 </div>
                             </div>
-                            <div class="col-auto card card-body" style="border-radius: 20px;">${response.content}</div>
+                            <div class="col-auto card card-body" style="border-radius: 20px;">${response.comment.content}</div>
                         </div>
                     `;
 

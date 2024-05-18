@@ -17,9 +17,9 @@ class Comment extends Model
     {
         parent::boot();
 
-        static::deleting(function ($post) {
-            $post->is_active = 0;
-            $post->save();
+        static::deleting(function ($comment) {
+            $comment->is_active = 0;
+            $comment->save();
         });
     }
 
