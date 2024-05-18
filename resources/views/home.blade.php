@@ -10,6 +10,7 @@
             $(".deletePost").on("click", deletePost);
             $(".updatePost").on("click", updatePost);
             $(".showUpdateForm").on("click", showUpdateForm);
+            $(".showCommentForm").on("click", showCommentForm);
         });
     </script>
 
@@ -74,7 +75,7 @@
 
                             {{-- Comments --}}
                             <div class="col-auto">
-                                <button type="button" class="btn btn-light rounded-circle">
+                                <button type="button" class="btn btn-light rounded-circle showCommentForm" data-auth="{{ json_encode(Auth::user()) }}">
                                     <i class="bi bi-chat-fill"></i>
                                 </button>
                             </div>
