@@ -9,6 +9,7 @@
         $(document).ready(function() {
             $(".deletePost").on("click", deletePost);
             $(".updatePost").on("click", updatePost);
+            $(".showUpdateForm").on("click", showUpdateForm);
         });
     </script>
 

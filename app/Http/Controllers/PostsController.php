@@ -16,7 +16,6 @@ class PostsController extends Controller
                         filter(request(['search']))->
                         paginate(5);
 
-
         // Get comments for each post
         foreach($models as $model)
         {
