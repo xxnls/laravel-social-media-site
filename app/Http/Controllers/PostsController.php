@@ -29,6 +29,13 @@ class PostsController extends Controller
         return view("/home", ["models"=>$models, "pageTitle"=>"Posts"]);
     }
 
+    //Get post data
+    public function getDataJson($id)
+    {
+        $model = Post::find($id);
+        return response()->json($model);
+    }
+
     //Create new post form
     public function create()
     {
@@ -99,25 +106,26 @@ class PostsController extends Controller
     //Update post AJAX
     public function updateAjax(Request $request, $id)
     {
+        $post = Post::findOrFail($id);
+
         $formFields = $request->validate([
             'content' => 'required|min:5|max:255',
             'image_path' => 'image'
         ]);
 
-        $formFields['user_id'] = auth()->user()->id;
+        $post->content = $formFields['content'];
 
         //Upload image
         if ($request->has('image_path')) {
             $image = $request->file('image_path');
             $imageName = auth()->user()->name . time() . '.' . $image->extension();
             $image->move(public_path('img/posts/'), $imageName);
-            $formFields['image_path'] = $imageName;
+            $post->image_path = $imageName;
         }
 
-        $post = Post::find($id);
-        $post->update($formFields);
+        $post->save();
 
-        return response()->json(['message' => 'Post updated successfully.'], 200);
+        return response()->json(['success' => true]);
     }
 
     //Delete post

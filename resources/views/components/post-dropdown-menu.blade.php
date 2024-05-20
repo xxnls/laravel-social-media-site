@@ -8,7 +8,7 @@
         </button>
         <div class="dropdown-menu">
             <!-- Dropdown menu links (AJAX) -->
-            <a class="dropdown-item showUpdateForm" data-id="{{ $model->id }}">Edit</a>
+            <a class="dropdown-item showUpdateForm" data-id="{{ $model->id }}" data-auth="{{ json_encode(Auth::user()) }}">Edit</a>
             <a class="dropdown-item deletePost" data-id="{{ $model->id }}">Delete</a>
         </div>
     </div>

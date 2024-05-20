@@ -8,7 +8,6 @@
     <script>
         $(document).ready(function() {
             $(".deletePost").on("click", deletePost);
-            $(".updatePost").on("click", updatePost);
             $(".showUpdateForm").on("click", showUpdateForm);
             $(".showCommentForm").on("click", showCommentForm);
         });
@@ -96,7 +95,7 @@
                                             <div class="col-md-1"></div> {{-- Spacer --}}
 
                                             {{-- Profile image --}}
-                                            <div class="col-md-1">
+                                            <div class="col-md-1 mx-3">
                                                 <x-show-profile-image :model="$comment->User" />
                                             </div>
 

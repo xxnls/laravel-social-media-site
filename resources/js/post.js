@@ -15,96 +15,103 @@ function deletePost(event)
         });
 }
 
-//TO DO: show update form
-function showUpdateForm(event)
-{
+function showUpdateForm(event) {
     let post = $(this);
 
-    let editFormHTML = `
-    <div class="card-body">
-            {{-- Content --}}
-            <div class="mb-2">
-                <textarea id="content" name="content" class="form-control" aria-label="{{$model->content}}" value="{{$model->content}}">{{$model->content}}</textarea>
+    // Post ID
+    let postId = post.data('id');
 
-                @error('content')
-                    <div class="alert alert-danger mt-2">{{ $message }}</div>
-                @enderror
-            </div>
+    let authUser = post.data('auth');
+    let imagePath = authUser.profile_image_path ? 'img/users/' + authUser.profile_image_path : 'img/default/default-user.jpg';
 
-            {{-- Image --}}
-            @if($model->image_path)
-            <div class="row text-center">
-                <div class="col">
-                    <img src="{{ asset('img/posts/' . $model->image_path) }}" class="img-fluid" alt="post image">
-                </div>
-            </div>
-            @endif
-
-            <div class="d-flex mt-2">
-                {{-- Edit button --}}
-                <div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </div>
-                </div>
-
-                {{-- Edit image input --}}
-                <div>
-                    <div>
-                        <input type="file" name="image_path" id="image_path" class="form-control" value="{{$model->image_path}}">
-
-                        @error('image_path')
-                            <div class="alert alert-danger mt-2">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-    </div>
-    `;
-
+    // Fetch the post data using AJAX
     $.ajax({
-            // url:"/posts/" + this.dataset.id + "/ajax",
-            // method:"GET",
-            // headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            // },
-            //hide element, then show edit form
-            success:function()
-            {
-                post.parents().eq(4).hide();
-                post.parents().eq(4).after(editFormHTML);
-            }
-        });
+        url: "/posts/" + postId + "/data",
+        method: "GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            // Hide the original post content
+            post.parents().eq(4).hide();
 
+            // Generate the edit form HTML
+            let editFormHTML = `
+                <div class="card card-body edit-form">
+                    <div class="row">
+                        <div class="col-auto">
+                            <img src="${imagePath}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="short-div">${authUser.first_name} ${authUser.last_name}</div>
+                            <a href="posts/${response.id}" class="short-div link-dark">
+                                Go to the post
+                            </a>
+                        </div>
+                    </div>
+
+                    <form id="updatePostForm" data-id="${response.id}">
+                        <div class="mb-2 pt-2">
+                            <textarea id="content" name="content" class="form-control" aria-label="${response.content}">${response.content}</textarea>
+                            <div id="contentError" class="alert alert-danger mt-2" style="display: none;"></div>
+                        </div>
+                        ${response.image_path ? `
+                        <div class="row text-center py-2">
+                            <div class="col">
+                                <img src="/img/posts/${response.image_path}" class="img-fluid" alt="post image">
+                            </div>
+                        </div>
+                        ` : ''}
+                        <div class="d-flex mt-2">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                            <div class="col-auto">
+                                <input type="file" name="image_path" id="image_path" class="form-control" value="${response.image_path}">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            `;
+
+            // Append the edit form after the original post container
+            post.parents().eq(4).after(editFormHTML);
+
+            // Handle the form submission
+            $('#updatePostForm').submit(function(event) {
+                event.preventDefault();
+
+                let formData = new FormData(this);
+                formData.append('_method', 'PUT');
+
+                $.ajax({
+                    url: "/posts/" + postId + "/ajax",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function() {
+                        // Refresh the page or update the post content dynamically
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        if (errors.content) {
+                            $('#contentError').text(errors.content[0]).show();
+                        } else {
+                            $('#contentError').hide();
+                        }
+                    }
+                });
+            });
+        }
+    });
 }
 
-//TO DO: update post
-function updatePost(event)
-{
-    let post = $(this);
-
-    $.ajax({
-            url:"/posts/" + this.dataset.id + "/ajax",
-            method:"GET",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            //hide element, then show edit form
-            success:function()
-            {
-                console.log("dsadsa");
-                post.parentNode.parentNode.parentNode.parentNode.parentNode.hide();
-            }
-        });
-}
-
-// ???
-// function init()
-// {
-//     $(".delete-post").click(deletePost);
-//     $(".show-update-form").click(showUpdateForm);
-//     $(".update-post").click(updatePost);
-// }
 
 function showCommentForm(event) {
     let post = $(this);
@@ -115,11 +122,15 @@ function showCommentForm(event) {
     //Post id
     let postId = post.data('id');
 
+    //Check if user has a profile image
+    let imagePath = authUser.profile_image_path ? 'img/users/' + authUser.profile_image_path : 'img/default/default-user.jpg';
+
+
     let commentFormHTML = `
         <div id="commentFormContainer" class="row mt-3 mx-2">
             <div class="col-md-1"></div> <!-- Spacer -->
             <div class="col-md-1">
-                <img src="img/users/${authUser.profile_image_path}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
+                <img src="${imagePath}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
             </div>
             <div class="col-md-3">
                 <div class="row">
@@ -165,7 +176,7 @@ function showCommentForm(event) {
                         <div class="row mt-3 mx-2">
                             <div class="col-md-1"></div> <!-- Spacer -->
                             <div class="col-md-1">
-                                <img src="img/users/${authUser.profile_image_path}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
+                                <img src="${imagePath}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
                             </div>
                             <div class="col-md-3">
                                 <div class="row">

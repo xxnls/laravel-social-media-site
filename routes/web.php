@@ -17,6 +17,9 @@ Route::get('/home', function () {
     return redirect('/');
 });
 
+//Get post data
+Route::get('/posts/{id}/data', [PostsController::class,"getDataJson"]);
+
 //Show create post form
 Route::get('/posts/create', [PostsController::class,"create"]);
 
@@ -30,7 +33,7 @@ Route::get('/posts/{id}/edit', [PostsController::class,"edit"]);
 Route::put('/posts/{id}', [PostsController::class,"update"]);
 
 //Update edited post AJAX
-Route::get('/posts/{id}/ajax', [PostsController::class,"updateAjax"]);
+Route::put('/posts/{id}/ajax', [PostsController::class,"updateAjax"]);
 
 //Delete post
 Route::delete('/posts/{id}', [PostsController::class,"destroy"]);
