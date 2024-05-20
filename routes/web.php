@@ -59,6 +59,9 @@ Route::post('/users/authenticate', [UsersController::class,"authenticate"]);
 //Store new user
 Route::post('/users', [UsersController::class,"store"]);
 
+//Show user
+Route::get('/users/{id}', [UsersController::class,"show"]);
+
 //Show user settings
 Route::get('/users/{id}/settings', [UsersController::class,"settings"]);
 

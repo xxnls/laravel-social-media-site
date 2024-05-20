@@ -26,7 +26,10 @@
                             </div>
 
                             <div class="col-auto">
-                                <div class="short-div">{{ $model->User->first_name . ' ' . $model->User->last_name}}</div>
+                                <a href="users/{{$model->user_id}}" class="short-div link-dark">
+                                    {{-- User name --}}
+                                    <div class="short-div">{{ $model->User->first_name . ' ' . $model->User->last_name}}</div>
+                                </a>
                                 {{-- Show post --}}
                                 <a href="posts/{{$model->id}}" class="short-div link-dark">
                                     {{-- Date formatting --}}

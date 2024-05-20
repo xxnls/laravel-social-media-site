@@ -129,7 +129,7 @@ function showCommentForm(event) {
     let commentFormHTML = `
         <div id="commentFormContainer" class="row mt-3 mx-2">
             <div class="col-md-1"></div> <!-- Spacer -->
-            <div class="col-md-1">
+            <div class="col-md-1 mx-3">
                 <img src="${imagePath}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
             </div>
             <div class="col-md-3">

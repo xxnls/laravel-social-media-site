@@ -21,7 +21,7 @@
                     Add new post
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a href="/users/{{Auth::user()->id}}" class="btn btn-light mt-1">
                     <i class="bi bi-person-circle"></i>

@@ -41,6 +41,12 @@ class UsersController extends Controller
         return redirect('/')->with('message', 'User created successfully.');
     }
 
+    //Show user profile
+    public function show($id){
+        $model = User::find($id);
+        return view('users.show', ["model"=>$model, "pageTitle"=>"User profile"]);
+    }
+
     //Logout user
     public function logout(Request $request){
         auth()->logout();

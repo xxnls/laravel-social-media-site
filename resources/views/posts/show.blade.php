@@ -1,6 +1,5 @@
 @extends("main")
 @section("content")
-<div class="card">
     {{-- Show post content --}}
     <div class="card">
         <div class="card-body">
@@ -100,5 +99,4 @@
                                     @endif
         </div>
     </div>
-</div>
 @endsection
