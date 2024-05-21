@@ -8,6 +8,20 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowsController extends Controller
 {
+    // Show users that user follows
+    public function indexFollowing($id)
+    {
+        $model = Follow::where('first_user_id', $id)->get();
+
+        // Get users from Follow model
+        $users = [];
+        foreach ($model as $follow) {
+            $users[] = $follow->secondUser;
+        }
+
+        return view('users.following', ['model' => $users, 'pageTitle' => 'Following']);
+    }
+
     // Follow user
     public function followUser($id)
     {

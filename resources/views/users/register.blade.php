@@ -22,7 +22,7 @@
                         <div class="card-body">
                             <form action="/users" method="POST">
                                 @csrf
-                                
+
                                 {{-- First name --}}
                                 <div class="form-group">
                                     <label for="first_name">First Name</label>
@@ -64,6 +64,16 @@
                                     <input type="date" name="date_of_birth" id="date_of_birth" class="form-control" value="{{old('date_of_birth')}}" required>
 
                                     @error('date_of_birth')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                {{-- City --}}
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" name="city" id="city" class="form-control" value="{{old('city')}}" required>
+
+                                    @error('city')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
                                 </div>

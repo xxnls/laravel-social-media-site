@@ -19,8 +19,8 @@ class UsersController extends Controller
     //Store new user
     public function store(Request $request){
         $formFields = $request->validate([
-            //'name' => ['required', 'min:5'],
             'email' => ['required', 'email'],
+            'city' => ['required', 'min:2', 'max:100'],
             'password' => ['required', 'min:8', 'confirmed'],
             'first_name' => ['required', 'min:2', 'max:100'],
             'last_name' => ['required', 'min:2', 'max:100'],
@@ -46,15 +46,26 @@ class UsersController extends Controller
     //Get user likes count
     public function getUserLikesCount(User $user)
     {
-        return $user->likes()->count();
+        return $user->posts()->withCount('likes')->get()->sum('likes_count');
+    }
+
+    //Get user followers count
+    public function getUserFollowersCount(User $user)
+    {
+        return Follow::where('second_user_id', $user->id)->count();
     }
 
     //Show user profile
     public function show($id){
         $model = User::find($id);
 
-        // Get user likes count
-        $likesCount = $this->getUserLikesCount($model);
+        // Check if user exists
+        if (!$model) {
+            abort(404, 'User not found');
+        }
+
+        $model->likesCount = $this->getUserLikesCount($model);
+        $model->followersCount = $this->getUserFollowersCount($model);
 
         // Check if user is followed
         $model->isFollowing = false;
@@ -67,7 +78,6 @@ class UsersController extends Controller
 
         return view('users.show', [
             'model' => $model,
-            'likesCount' => $likesCount,
             'pageTitle' => $model->first_name . ' ' . $model->last_name
         ]);
     }
@@ -146,6 +156,27 @@ class UsersController extends Controller
         $user->update($formFields);
 
         return redirect('users/'.$user->id.'/settings')->with('message', 'User email updated successfully.');
+    }
+
+    //Show change city form
+    public function city($id){
+        $model = User::find($id);
+        return view('users.user-settings.edit-city', ["model"=>$model, "pageTitle"=>"Change city"]);
+    }
+
+    //Update user city
+    public function updateCity(Request $request, $id){
+        $formFields = $request->validate([
+            'city' => ['required', 'min:2', 'max:100', 'regex:/^[a-zA-Z_ ]+$/', 'string']
+        ]);
+
+        // Change spaces to underscores
+        $formFields['city'] = str_replace(' ', '_', $formFields['city']);
+
+        $user=User::find($id);
+        $user->update($formFields);
+
+        return redirect('users/'.$user->id.'/settings')->with('message', 'User city updated successfully.');
     }
 
     //Show change password form

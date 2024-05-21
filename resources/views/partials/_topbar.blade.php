@@ -7,8 +7,13 @@
         <div class="input-group">
             <input type="text" name="search" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="button-addon2">
             <button class="btn btn-outline-secondary" type="submit">Search</button>
-        </div>          
+        </div>
     </form>
+
+    {{-- Weather API --}}
+    <div class="d-flex">
+        <x-weather-api />
+    </div>
 
     {{-- Logout button --}}
     <form action="/logout" method="POST">

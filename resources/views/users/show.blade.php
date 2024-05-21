@@ -4,6 +4,7 @@
 <script>
     $(document).ready(function() {
         $(".followUser").on("click", followUser);
+        $('[data-toggle="tooltip"]').tooltip()
     });
 </script>
 
@@ -18,13 +19,13 @@
 
         @if(Auth::check() && Auth::user()->id != $model->id)
             @if($model->isFollowing)
-                <div class="row text-center mt-1">
+                <div class="row text-center mt-2">
                     <div class="col">
                         <button class="btn btn-success followUser" data-id="{{ $model->id }}">Unfollow</button>
                     </div>
                 </div>
             @else
-                <div class="row text-center mt-1">
+                <div class="row text-center mt-2">
                     <div class="col">
                         <button class="btn btn-light followUser" data-id="{{ $model->id }}">Follow</button>
                     </div>
@@ -37,18 +38,18 @@
         {{-- User details --}}
         <div class="row">
             <div class="col-md-4 text-center">
-                <i class="bi bi-calendar-check-fill"></i>
+                <i class="bi bi-calendar-check-fill" data-toggle="tooltip" data-placement="top" title="User since"></i>
                 <div>{{ $model->created_at->format('d/m/Y') }}</div>
             </div>
 
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 text-center" data-toggle="tooltip" data-placement="top" title="Followers">
                 <i class="bi bi-heart-fill"></i>
-                FOLLOWING COUNT TO DO
+                <div class="followersCount">{{ $model->followersCount }}</div>
             </div>
 
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 text-center" data-toggle="tooltip" data-placement="top" title="Total likes">
                 <i class="bi bi-hand-thumbs-up-fill"></i>
-                <div>{{ $likesCount }}</div>
+                <div>{{ $model->likesCount }}</div>
             </div>
         </div>
     </div>

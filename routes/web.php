@@ -5,6 +5,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FollowsController;
+use App\Http\Controllers\WeatherApiController;
 
 //Welcome page
 // Route::get('/', function () {
@@ -90,6 +91,12 @@ Route::get('/users/{id}/settings/profile-image', [UsersController::class,"profil
 //Update user profile image
 Route::put('/users/{id}/profile-image', [UsersController::class,"updateProfileImage"]);
 
+//Show update city form
+Route::get('/users/{id}/settings/city', [UsersController::class,"city"]);
+
+//Update city
+Route::put('/users/{id}/city', [UsersController::class,"updateCity"]);
+
 //Show delete user form
 Route::get('/users/{id}/settings/delete', [UsersController::class,"delete"]);
 
@@ -105,4 +112,8 @@ Route::post('/posts/{id}/like', [PostsController::class, 'likePost']);
 //Follow user
 Route::post('/users/{id}/follow', [FollowsController::class, 'followUser']);
 
+//Show users that user follows
+Route::get('/users/{id}/following', [FollowsController::class, 'indexFollowing']);
 
+//WeatherAPI get weather data
+Route::get('/weather', [WeatherApiController::class, 'getWeatherData']);

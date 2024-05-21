@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'last_name' => $last_name,
             'gender' => ['male', 'female', 'other'][rand(0, 2)],
             'date_of_birth' => fake()->date(),
+            'city' => fake()->city(),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
         ];

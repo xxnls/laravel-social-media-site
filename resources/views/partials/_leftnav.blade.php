@@ -44,7 +44,7 @@
             </li>
 
             <li class="nav-item">
-                <a {{--href=""--}} class="btn btn-light mt-1">
+                <a href="/users/{{ Auth::user()->id }}/following" class="btn btn-light mt-1">
                     <i class="bi bi-heart-fill"></i>
                     Following
                 </a>

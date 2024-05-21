@@ -30,6 +30,13 @@
         </div>
 
         <div class="row">
+            <a class="btn btn-secondary mt-1" href="settings/city">
+                <i class="bi bi-buildings-fill"></i>
+                Change city
+            </a>
+        </div>
+
+        <div class="row">
             <a class="btn btn-secondary mt-1" href="settings/password">
                 <i class="bi bi-lock"></i>
                 Change password

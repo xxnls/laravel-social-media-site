@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->enum('gender', ['male', 'female', 'other']);
             $table->date('date_of_birth');
+            $table->string('city');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile_image_path')->nullable();
