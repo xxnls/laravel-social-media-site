@@ -10,6 +10,7 @@
             $(".deletePost").on("click", deletePost);
             $(".showUpdateForm").on("click", showUpdateForm);
             $(".showCommentForm").on("click", showCommentForm);
+            $(".likePost").on("click", likePost);
         });
     </script>
 
@@ -64,13 +65,13 @@
                         <div class="row mt-2 gx-2">
                             {{-- Likes --}}
                             <div class="col-auto">
-                                <button type="button" class="btn btn-light rounded-circle">
+                                <button type="button" class="btn btn-light rounded-circle likePost" data-id="{{ $model->id }}">
                                     <i class="bi bi-hand-thumbs-up-fill"></i>
                                 </button>
                             </div>
 
-                            <div class="col-auto mt-2">
-                                0
+                            <div class="col-auto mt-2 likeCount" data-id="{{ $model->id }}">
+                                {{ $model->likes->count() }}
                             </div>
 
                             <div class="col-auto mx-2"></div> {{-- Spacer --}}

@@ -46,7 +46,7 @@
             <li class="nav-item">
                 <a {{--href=""--}} class="btn btn-light mt-1">
                     <i class="bi bi-heart-fill"></i>
-                    Friends and followers
+                    Following
                 </a>
             </li>
 

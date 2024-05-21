@@ -98,4 +98,7 @@ Route::delete('/users/{id}', [UsersController::class,"destroy"]);
 //Logout user
 Route::post('/logout', [UsersController::class,"logout"]);
 
+//Like post
+Route::post('/posts/{id}/like', [PostsController::class, 'likePost']);
+
 

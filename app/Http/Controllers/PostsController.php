@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Like;
 
 class PostsController extends Controller
 {
@@ -149,5 +151,30 @@ class PostsController extends Controller
         else{
             return response()->json(['message' => 'Post not found.'], 404);
         }
+    }
+
+    //Like post
+    public function likePost($id, Request $request)
+    {
+        $user = Auth::user();
+
+        // Check if the user has already liked the post
+        $like = Like::where('user_id', $user->id)->where('post_id', $id)->first();
+
+        if ($like) {
+            // If already liked, remove the like
+            $like->delete();
+        } else {
+            // If not liked, add a new like
+            Like::create([
+                'user_id' => $user->id,
+                'post_id' => $id
+            ]);
+        }
+
+        // Get the updated like count
+        $likeCount = Like::where('post_id', $id)->count();
+
+        return response()->json(['likeCount' => $likeCount]);
     }
 }

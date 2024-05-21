@@ -112,7 +112,6 @@ function showUpdateForm(event) {
     });
 }
 
-
 function showCommentForm(event) {
     let post = $(this);
 
@@ -123,8 +122,7 @@ function showCommentForm(event) {
     let postId = post.data('id');
 
     //Check if user has a profile image
-    let imagePath = authUser.profile_image_path ? 'img/users/' + authUser.profile_image_path : 'img/default/default-user.jpg';
-
+    let imagePath = authUser.profile_image_path ? '/img/users/' + authUser.profile_image_path : '/img/default/default-user.jpg';
 
     let commentFormHTML = `
         <div id="commentFormContainer" class="row mt-3 mx-2">
@@ -175,7 +173,7 @@ function showCommentForm(event) {
                     let commentHTML = `
                         <div class="row mt-3 mx-2">
                             <div class="col-md-1"></div> <!-- Spacer -->
-                            <div class="col-md-1">
+                            <div class="col-md-1 mx-3">
                                 <img src="${imagePath}" class="rounded-circle border" alt="Profile Image" width="50" height="50">
                             </div>
                             <div class="col-md-3">
@@ -206,3 +204,21 @@ function showCommentForm(event) {
     }
 }
 
+function likePost(event) {
+    let post = $(this);
+    let postId = post.data('id');
+
+    $.ajax({
+        url: "/posts/" + postId + "/like",
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            $('.likeCount[data-id="' + postId + '"]').text(response.likeCount);
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText);
+        }
+    });
+}
