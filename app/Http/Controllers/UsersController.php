@@ -41,10 +41,24 @@ class UsersController extends Controller
         return redirect('/')->with('message', 'User created successfully.');
     }
 
+    //Get user likes count
+    public function getUserLikesCount(User $user)
+    {
+        return $user->likes()->count();
+    }
+
     //Show user profile
     public function show($id){
         $model = User::find($id);
-        return view('users.show', ["model"=>$model, "pageTitle"=>"User profile"]);
+
+        // Get user likes count
+        $likesCount = $this->getUserLikesCount($model);
+
+        return view('users.show', [
+            'model' => $model,
+            'likesCount' => $likesCount,
+            'pageTitle' => $model->first_name . ' ' . $model->last_name
+        ]);
     }
 
     //Logout user
@@ -201,14 +215,9 @@ class UsersController extends Controller
         //Delete all user posts
         $posts = Post::where("user_id","=",$user->id)->get();
         foreach($posts as $post){
-            //$post->is_active = 0;
-            //$post->update();
             $post->delete();
         }
 
-        //Delete user
-        //$user->is_active = 0;
-        //$user->update();
         $user->delete();
 
         //Logout, invalidate session and redirect

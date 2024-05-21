@@ -24,8 +24,8 @@
             </div>
 
             <div class="col-md-4 text-center">
-                <i class="bi bi-calendar-check-fill"></i>
-                OTHER COUNT TO DO
+                <i class="bi bi-hand-thumbs-up-fill"></i>
+                <div>{{ $likesCount }}</div>
             </div>
         </div>
     </div>
