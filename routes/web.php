@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\FollowsController;
 
 //Welcome page
 // Route::get('/', function () {
@@ -100,5 +101,8 @@ Route::post('/logout', [UsersController::class,"logout"]);
 
 //Like post
 Route::post('/posts/{id}/like', [PostsController::class, 'likePost']);
+
+//Follow user
+Route::post('/users/{id}/follow', [FollowsController::class, 'followUser']);
 
 

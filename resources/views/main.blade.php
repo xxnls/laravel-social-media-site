@@ -16,6 +16,7 @@
     <script src="{{mix('/node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <script src="{{mix('/node_modules/simplebar/dist/simplebar.min.js')}}"></script>
     <script src="{{mix('/resources/js/post.js')}}"></script>
+    <script src="{{mix('/resources/js/user.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
 

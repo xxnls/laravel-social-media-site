@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follow;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 
 class UsersController extends Controller
@@ -53,6 +55,15 @@ class UsersController extends Controller
 
         // Get user likes count
         $likesCount = $this->getUserLikesCount($model);
+
+        // Check if user is followed
+        $model->isFollowing = false;
+        if (Auth::check()) {
+            $follow = Follow::where('first_user_id', Auth::user()->id)->where('second_user_id', $model->id)->first();
+            if ($follow) {
+                $model->isFollowing = true;
+            }
+        }
 
         return view('users.show', [
             'model' => $model,

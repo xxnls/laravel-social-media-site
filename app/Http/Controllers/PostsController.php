@@ -83,6 +83,16 @@ class PostsController extends Controller
     public function show($id)
     {
         $model = Post::find($id);
+
+        // Check if post is liked by the authenticated user
+        $model->isLiked = false;
+        if (Auth::check()) {
+            $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
+            if ($like) {
+                $model->isLiked = true;
+            }
+        }
+
         return view("posts.show", ["model"=>$model,"pageTitle"=>"Post"]);
     }
 

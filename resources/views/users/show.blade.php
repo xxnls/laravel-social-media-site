@@ -1,5 +1,12 @@
 @extends("main")
 @section("content")
+
+<script>
+    $(document).ready(function() {
+        $(".followUser").on("click", followUser);
+    });
+</script>
+
 <div class="card">
     <div class="card-body">
         <div class="row text-center mt-3">
@@ -9,7 +16,23 @@
             </div>
         </div>
 
-        <hr>
+        @if(Auth::check() && Auth::user()->id != $model->id)
+            @if($model->isFollowing)
+                <div class="row text-center mt-1">
+                    <div class="col">
+                        <button class="btn btn-success followUser" data-id="{{ $model->id }}">Unfollow</button>
+                    </div>
+                </div>
+            @else
+                <div class="row text-center mt-1">
+                    <div class="col">
+                        <button class="btn btn-light followUser" data-id="{{ $model->id }}">Follow</button>
+                    </div>
+                </div>
+            @endif
+        @endif
+
+        <hr class="mt-3">
 
         {{-- User details --}}
         <div class="row">
