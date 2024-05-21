@@ -65,9 +65,15 @@
                         <div class="row mt-2 gx-2">
                             {{-- Likes --}}
                             <div class="col-auto">
-                                <button type="button" class="btn btn-light rounded-circle likePost" data-id="{{ $model->id }}">
-                                    <i class="bi bi-hand-thumbs-up-fill"></i>
-                                </button>
+                                @if ($model->isLiked)
+                                    <button type="button" class="btn btn-success rounded-circle likePost" data-id="{{ $model->id }}">
+                                        <i class="bi bi-hand-thumbs-up-fill"></i>
+                                    </button>
+                                @else
+                                    <button type="button" class="btn btn-light rounded-circle likePost" data-id="{{ $model->id }}">
+                                        <i class="bi bi-hand-thumbs-up-fill"></i>
+                                    </button>
+                                @endif
                             </div>
 
                             <div class="col-auto mt-2 likeCount" data-id="{{ $model->id }}">

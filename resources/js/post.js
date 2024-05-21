@@ -216,6 +216,12 @@ function likePost(event) {
         },
         success: function(response) {
             $('.likeCount[data-id="' + postId + '"]').text(response.likeCount);
+
+            if(response.isLiked) {
+                $('.likePost[data-id="' + postId + '"]').removeClass('btn-light').addClass('btn-success');
+            } else {
+                $('.likePost[data-id="' + postId + '"]').removeClass('btn-success').addClass('btn-light');
+            }
         },
         error: function(xhr) {
             console.log(xhr.responseText);

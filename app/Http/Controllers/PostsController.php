@@ -28,6 +28,18 @@ class PostsController extends Controller
             $model->comments = $comments;
         }
 
+        // Check if post is liked by the authenticated user
+        foreach($models as $model)
+        {
+            $model->isLiked = false;
+            if (Auth::check()) {
+                $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
+                if ($like) {
+                    $model->isLiked = true;
+                }
+            }
+        }
+
         return view("/home", ["models"=>$models, "pageTitle"=>"Posts"]);
     }
 
@@ -159,11 +171,11 @@ class PostsController extends Controller
         $user = Auth::user();
 
         // Check if the user has already liked the post
-        $like = Like::where('user_id', $user->id)->where('post_id', $id)->first();
+        $isLiked = Like::where('user_id', $user->id)->where('post_id', $id)->first();
 
-        if ($like) {
+        if ($isLiked) {
             // If already liked, remove the like
-            $like->delete();
+            $isLiked->delete();
         } else {
             // If not liked, add a new like
             Like::create([
@@ -175,6 +187,6 @@ class PostsController extends Controller
         // Get the updated like count
         $likeCount = Like::where('post_id', $id)->count();
 
-        return response()->json(['likeCount' => $likeCount]);
+        return response()->json(['likeCount' => $likeCount, 'isLiked' => $isLiked ? false : true]);
     }
 }
