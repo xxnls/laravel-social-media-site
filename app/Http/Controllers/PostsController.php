@@ -43,6 +43,110 @@ class PostsController extends Controller
         return view("/home", ["models"=>$models, "pageTitle"=>"Posts"]);
     }
 
+    //Show posts order by Likes amount
+    public function indexByLikes()
+    {
+        $models = Post::where("is_active","=",true)->
+                        withCount('likes')->
+                        orderBy('likes_count', 'desc')->
+                        paginate(5);
+
+        // Get comments for each post
+        foreach($models as $model)
+        {
+            $comments = Comment::where("post_id","=",$model->id)->get();
+            foreach ($comments as $comment) {
+                $comment->load('User');
+            }
+            $model->comments = $comments;
+        }
+
+        // Check if post is liked by the authenticated user
+        foreach($models as $model)
+        {
+            $model->isLiked = false;
+            if (Auth::check()) {
+                $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
+                if ($like) {
+                    $model->isLiked = true;
+                }
+            }
+        }
+
+        return view("/home", ["models"=>$models, "pageTitle"=>"Trending posts"]);
+    }
+
+    //Show posts made by user
+    // public function indexByUser()
+    // {
+    //     $models = Post::where("is_active","=",true)->
+    //                     where("user_id","=",Auth::user()->id)->
+    //                     latest()->
+    //                     paginate(5);
+
+    //     // Get comments for each post
+    //     foreach($models as $model)
+    //     {
+    //         $comments = Comment::where("post_id","=",$model->id)->get();
+    //         foreach ($comments as $comment) {
+    //             $comment->load('User');
+    //         }
+    //         $model->comments = $comments;
+    //     }
+
+    //     // Check if post is liked by the authenticated user
+    //     foreach($models as $model)
+    //     {
+    //         $model->isLiked = false;
+    //         if (Auth::check()) {
+    //             $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
+    //             if ($like) {
+    //                 $model->isLiked = true;
+    //             }
+    //         }
+    //     }
+
+    //     return view("/home", ["models"=>$models, "pageTitle"=>"User posts"]);
+    // }
+
+    //Show any posts that user interacted with (commented or liked)
+    public function indexByUserInteraction()
+    {
+        $models = Post::where("is_active","=",true)->
+                        whereIn('id', function($query) {
+                            $query->select('post_id')->from('comments')->where('user_id', Auth::user()->id);
+                        })->
+                        orWhereIn('id', function($query) {
+                            $query->select('post_id')->from('likes')->where('user_id', Auth::user()->id);
+                        })->
+                        latest()->
+                        paginate(5);
+
+        // Get comments for each post
+        foreach($models as $model)
+        {
+            $comments = Comment::where("post_id","=",$model->id)->get();
+            foreach ($comments as $comment) {
+                $comment->load('User');
+            }
+            $model->comments = $comments;
+        }
+
+        // Check if post is liked by the authenticated user
+        foreach($models as $model)
+        {
+            $model->isLiked = false;
+            if (Auth::check()) {
+                $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
+                if ($like) {
+                    $model->isLiked = true;
+                }
+            }
+        }
+
+        return view("/home", ["models"=>$models, "pageTitle"=>"Posts you interacted with"]);
+    }
+
     //Get post data
     public function getDataJson($id)
     {

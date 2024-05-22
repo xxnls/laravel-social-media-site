@@ -14,6 +14,12 @@ use App\Http\Controllers\WeatherApiController;
 
 Route::get('/', [PostsController::class,"index"]);
 
+//Show posts order by Likes amount
+Route::get('/trending', [PostsController::class,"indexByLikes"]);
+
+//Show posts liked or commented by user
+Route::get('/myfeed', [PostsController::class,"indexByUserInteraction"]);
+
 //Posts page
 Route::get('/home', function () {
     return redirect('/');

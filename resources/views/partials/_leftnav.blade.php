@@ -30,14 +30,14 @@
             </li>
 
             <li class="nav-item">
-                <a {{--href=""--}} class="btn btn-light mt-1">
+                <a href="/myfeed" class="btn btn-light mt-1">
                     <i class="bi bi-file-post"></i>
                     My feed
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="/home" class="btn btn-light mt-1">
+                <a href="/trending" class="btn btn-light mt-1">
                     <i class="bi bi-fire"></i>
                     Trending feed
                 </a>
@@ -51,7 +51,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="/users/{{Auth::user()->id}}/settings" class="btn btn-light mt-1">
+                <a href="/users/{{ Auth::user()->id }}/settings" class="btn btn-light mt-1">
                     <i class="bi bi-gear-fill"></i>
                     Settings
                 </a>
