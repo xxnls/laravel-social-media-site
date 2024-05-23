@@ -7,30 +7,60 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Like;
+use App\Models\User;
 
 class PostsController extends Controller
 {
-    //Show posts
+    //Number of posts per page
+    private $postsPerPage = 5;
+
+    //Show posts (search by post content by default)
     public function index()
     {
-        $models = Post::where("is_active","=",true)->
-                        latest()->
-                        filter(request(['search']))->
-                        paginate(5);
+        // Handle search based on the search_type parameter
+        $searchType = request('search_type', 'posts');
+        $searchQuery = request('search', '');
 
-        // Get comments for each post
-        foreach($models as $model)
-        {
-            $comments = Comment::where("post_id","=",$model->id)->get();
+        if ($searchType == 'users') {
+            return $this->searchUsers($searchQuery);
+        } else {
+            return $this->searchPosts($searchQuery);
+        }
+    }
+
+    private function searchPosts($query)
+    {
+        $models = Post::where('is_active', true)
+            ->where(function($q) use ($query) {
+                $q->where('content', 'LIKE', "%{$query}%");
+            })
+            ->latest()
+            ->paginate($this->postsPerPage);
+
+        // Load comments and likes for each post
+        $this->loadCommentsAndLikes($models);
+
+        return view('/home', ['models' => $models, 'pageTitle' => 'Posts']);
+    }
+
+    private function searchUsers($query)
+    {
+        $users = User::where('first_name', 'LIKE', "%{$query}%")
+            ->orWhere('last_name', 'LIKE', "%{$query}%")
+            ->paginate($this->postsPerPage);
+
+        return view('/home', ['models' => $users, 'pageTitle' => 'Users']);
+    }
+
+    private function loadCommentsAndLikes($models)
+    {
+        foreach ($models as $model) {
+            $comments = Comment::where('post_id', '=', $model->id)->get();
             foreach ($comments as $comment) {
-                $comment->load('User');
+                $comment->load('user');
             }
             $model->comments = $comments;
-        }
 
-        // Check if post is liked by the authenticated user
-        foreach($models as $model)
-        {
             $model->isLiked = false;
             if (Auth::check()) {
                 $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
@@ -39,8 +69,6 @@ class PostsController extends Controller
                 }
             }
         }
-
-        return view("/home", ["models"=>$models, "pageTitle"=>"Posts"]);
     }
 
     //Show posts order by Likes amount
@@ -49,29 +77,9 @@ class PostsController extends Controller
         $models = Post::where("is_active","=",true)->
                         withCount('likes')->
                         orderBy('likes_count', 'desc')->
-                        paginate(5);
+                        paginate($this->postsPerPage);
 
-        // Get comments for each post
-        foreach($models as $model)
-        {
-            $comments = Comment::where("post_id","=",$model->id)->get();
-            foreach ($comments as $comment) {
-                $comment->load('User');
-            }
-            $model->comments = $comments;
-        }
-
-        // Check if post is liked by the authenticated user
-        foreach($models as $model)
-        {
-            $model->isLiked = false;
-            if (Auth::check()) {
-                $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
-                if ($like) {
-                    $model->isLiked = true;
-                }
-            }
-        }
+        $this->loadCommentsAndLikes($models);
 
         return view("/home", ["models"=>$models, "pageTitle"=>"Trending posts"]);
     }
@@ -120,29 +128,9 @@ class PostsController extends Controller
                             $query->select('post_id')->from('likes')->where('user_id', Auth::user()->id);
                         })->
                         latest()->
-                        paginate(5);
+                        paginate($this->postsPerPage);
 
-        // Get comments for each post
-        foreach($models as $model)
-        {
-            $comments = Comment::where("post_id","=",$model->id)->get();
-            foreach ($comments as $comment) {
-                $comment->load('User');
-            }
-            $model->comments = $comments;
-        }
-
-        // Check if post is liked by the authenticated user
-        foreach($models as $model)
-        {
-            $model->isLiked = false;
-            if (Auth::check()) {
-                $like = Like::where('user_id', Auth::user()->id)->where('post_id', $model->id)->first();
-                if ($like) {
-                    $model->isLiked = true;
-                }
-            }
-        }
+        $this->loadCommentsAndLikes($models);
 
         return view("/home", ["models"=>$models, "pageTitle"=>"Posts you interacted with"]);
     }

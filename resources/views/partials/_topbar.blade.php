@@ -2,10 +2,14 @@
     <a class="navbar-brand px-3" href="/home">Social Media Site</a>
 
     @auth
-    {{-- Search bar --}}
-    <form action="/" class="d-flex">
+    {{-- Search bar with dropdown selection for Users/Post content --}}
+    <form action="/" class="d-flex w-25">
         <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="button-addon2">
+            <input type="text" name="search" class="form-control w-50" placeholder="Search..." aria-label="Search..." aria-describedby="button-addon2">
+            <select class="form-select" name="search_type" id="search_type">
+                <option value="posts">Posts</option>
+                <option value="users">Users</option>
+            </select>
             <button class="btn btn-outline-secondary" type="submit">Search</button>
         </div>
     </form>

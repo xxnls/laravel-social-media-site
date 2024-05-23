@@ -56,10 +56,10 @@
     {{-- Footer --}}
     @include('partials._footer')
 
-    {{-- <script src="{{mix('/node_modules/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{mix('/node_modules/@popperjs/core/dist/umd/popper.min.js')}}"></script>
-    <script src="{{mix('/node_modules/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-    <script src="{{mix('/node_modules/simplebar/dist/simplebar.min.js')}}"></script>
-    <script src="//unpkg.com/alpinejs" defer></script> --}}
+    <script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+    </script>
 </body>
 </html>

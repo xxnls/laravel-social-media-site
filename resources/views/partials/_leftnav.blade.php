@@ -30,21 +30,21 @@
             </li>
 
             <li class="nav-item">
-                <a href="/myfeed" class="btn btn-light mt-1">
+                <a href="/myfeed" class="btn btn-light mt-1" data-toggle="tooltip" data-placement="right" title="Posts that you interacted with">
                     <i class="bi bi-file-post"></i>
                     My feed
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="/trending" class="btn btn-light mt-1">
+                <a href="/trending" class="btn btn-light mt-1" data-toggle="tooltip" data-placement="right" title="Posts ordered by likes amount">
                     <i class="bi bi-fire"></i>
                     Trending feed
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="/users/{{ Auth::user()->id }}/following" class="btn btn-light mt-1">
+                <a href="/users/{{ Auth::user()->id }}/following" class="btn btn-light mt-1" data-toggle="tooltip" data-placement="right" title="Users that you follow">
                     <i class="bi bi-heart-fill"></i>
                     Following
                 </a>
