@@ -5,6 +5,7 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\FollowsController;
+use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\WeatherApiController;
 
 //Welcome page
@@ -19,6 +20,12 @@ Route::get('/trending', [PostsController::class,"indexByLikes"]);
 
 //Show posts liked or commented by user
 Route::get('/myfeed', [PostsController::class,"indexByUserInteraction"]);
+
+//Show advanced search form
+Route::get('/a-search', [UtilityController::class,"createAdvancedSearch"]);
+
+//Advanced search
+Route::post('/a-search', [UtilityController::class,"advancedSearch"]);
 
 //Posts page
 Route::get('/home', function () {

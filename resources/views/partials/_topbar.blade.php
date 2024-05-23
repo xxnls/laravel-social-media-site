@@ -1,18 +1,28 @@
 <div class="navbar bg-body-secondary fixed-top">
-    <a class="navbar-brand px-3" href="/home">Social Media Site</a>
+    <a class="navbar-brand px-3" href="/home">
+        <i class="bi bi-person-circle mx-1"></i>
+        Social Media Site
+    </a>
 
     @auth
     {{-- Search bar with dropdown selection for Users/Post content --}}
     <form action="/" class="d-flex w-25">
         <div class="input-group">
-            <input type="text" name="search" class="form-control w-50" placeholder="Search..." aria-label="Search..." aria-describedby="button-addon2">
+            <input type="text" name="search" class="form-control w-25" placeholder="Search..." aria-label="Search..." aria-describedby="button-addon2">
             <select class="form-select" name="search_type" id="search_type">
                 <option value="posts">Posts</option>
                 <option value="users">Users</option>
             </select>
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <button class="btn btn-outline-secondary" type="submit">
+                Search
+                <i class="bi bi-search"></i>
+            </button>
         </div>
     </form>
+
+    <a href="/a-search" class="btn btn-outline-secondary">
+        Advanced Search
+    </a>
 
     {{-- Weather API --}}
     <div class="d-flex">
