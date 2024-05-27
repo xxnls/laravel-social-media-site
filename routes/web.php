@@ -22,10 +22,10 @@ Route::get('/trending', [PostsController::class,"indexByLikes"]);
 Route::get('/myfeed', [PostsController::class,"indexByUserInteraction"]);
 
 //Show advanced search form
-Route::get('/a-search', [UtilityController::class,"createAdvancedSearch"]);
+Route::get('/a-search', [PostsController::class,"createAdvancedSearch"]);
 
 //Advanced search
-Route::post('/a-search', [UtilityController::class,"advancedSearch"]);
+Route::post('/a-search', [PostsController::class,"advancedSearch"]);
 
 //Posts page
 Route::get('/home', function () {

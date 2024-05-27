@@ -52,6 +52,59 @@ class PostsController extends Controller
         return view('/home', ['models' => $users, 'pageTitle' => 'Users']);
     }
 
+    //Show advanced search form
+    public function createAdvancedSearch()
+    {
+        return view('advanced-search');
+    }
+
+    public function advancedSearch(Request $request)
+    {
+        $searchType = $request->input('search_type');
+        $dateFrom = $request->input('creation_date_from');
+        $dateTo = $request->input('creation_date_to');
+
+        if ($searchType == 'posts') {
+            return $this->searchPostsAdvanced($dateFrom, $dateTo);
+        } else {
+            return $this->searchUsersAdvanced($dateFrom, $dateTo);
+        }
+    }
+
+    private function searchPostsAdvanced($dateFrom, $dateTo)
+    {
+        $query = Post::where('is_active', true);
+
+        if ($dateFrom) {
+            $query->whereDate('created_at', '>=', $dateFrom);
+        }
+        if ($dateTo) {
+            $query->whereDate('created_at', '<=', $dateTo);
+        }
+
+        $models = $query->latest()->paginate(20);
+
+        $this->loadCommentsAndLikes($models);
+
+        return view('/home', ['models' => $models, 'pageTitle' => 'Posts']);
+    }
+
+    private function searchUsersAdvanced($dateFrom, $dateTo)
+    {
+        $query = User::where('is_active', true);
+
+        if ($dateFrom) {
+            $query->whereDate('created_at', '>=', $dateFrom);
+        }
+        if ($dateTo) {
+            $query->whereDate('created_at', '<=', $dateTo);
+        }
+
+        $users = $query->latest()->paginate(20);
+
+        return view('/home', ['models' => $users, 'pageTitle' => 'Users']);
+    }
+
     private function loadCommentsAndLikes($models)
     {
         foreach ($models as $model) {
