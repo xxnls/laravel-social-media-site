@@ -22,7 +22,7 @@ A social media site built with Laravel. Made for Advanced Website Programming co
 0. Start your MySQL database engine.
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/laravel-social-media-site.git
+    git clone https://github.com/xxnls/laravel-social-media-site.git
     ```
 2. Navigate to the project directory:
     ```bash
